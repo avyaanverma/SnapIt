@@ -8,25 +8,12 @@ const protect = async (
   next
 ) => {
   try {
-    let token;
-
-    const authHeader =
-      req.headers.authorization;
-
-    if (
-      authHeader &&
-      authHeader.startsWith(
-        "Bearer "
-      )
-    ) {
-      token =
-        authHeader.split(" ")[1];
-    }
+    const token = req.cookies?.accessToken;
 
     if (!token) {
       throw new ApiError(
         401,
-        "Access token missing"
+        "Authentication required"
       );
     }
 
@@ -45,7 +32,11 @@ const protect = async (
       );
     }
 
-    req.user = user;
+    req.user = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    };
 
     next();
   } catch (error) {
