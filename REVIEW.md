@@ -78,3 +78,35 @@ Based on the official assignment protocols for the Real-Time Chat Application tr
 1. **Core Database Model (`message.model.js`):** Built structured logging engine routing relational sender and receiver Mongoose IDs along with message text constraints.
 2. **Instant Event Broadcasting Layer (`chat.controller.js`):** Engineered logic to isolate user session mappings (`userSocketMap`) and conditionally trigger real-time `io.to().emit()` pipes for dynamic rendering without standard polling mechanisms.
 3. **Historical Data Retrievals:** Tied optimized logical `$or` cursor configurations to chronologically serialize user-to-user dialogue indexes.
+
+# Code Review & Gap Analysis - Project SnapIt
+
+## 🏗️ Architecture & Performance (`src/routes/AppRoutes.jsx`)
+### 🚨 Issues Identified
+1. **Performance Bottleneck (Object Re-creation):** The `router` configuration instance was defined inside the `AppRoutes` component using `let`. Re-creating the routing layout on every re-render causes garbage collection overhead.
+2. **Inconsistent URL Casing:** The path for the Inbox layout was defined with a capital letter (`path: "Inbox"`), breaking standard lowercase URL naming conventions.
+
+### 🛠️ Fixes Applied
+1. **Performance Optimization:** Extracted `createBrowserRouter` configuration outside the functional component and declared it as a `const`.
+2. **URL Normalization:** Standardized the `/Inbox` route to lowercase `/inbox`.
+
+---
+
+## 💻 UI/UX & Navigation Routing (`src/pages/Home.jsx`)
+### 🚨 Issues Identified
+1. **Dead Links & Unused Imports:** The `Link` component was imported from `"react-router"` but never utilized while anchors used standard hardcoded `href="#"`.
+2. **Broken Asset URLs:** User profile avatars used static broken links (`http://googleusercontent.com/profile/picture/*`).
+3. **Template Copy-Paste Duplication:** Mock descriptions had text accidentally repeated twice inside paragraphs.
+
+### 🛠️ Fixes Applied
+1. **Integrated React Single-Page Navigation:** Replaced dead standard anchors with proper `<Link to="/login">` and `<Link to="/register">` components.
+2. **Repaired Broken Image Resources:** Replaced faulty static URLs with placeholder graphics via Dicebear SVG assets.
+
+---
+
+## 🛠️ Network & Infrastructure Refactoring
+### 🛠️ Features Implemented & Resolved
+1. **Centralized Network Engine Configuration (`axiosInstance.js`):** Moved away from standard raw fetch blocks to an automated HTTP Client Wrapper instance processing standard cross-origin configuration flags (`withCredentials: true`) to support cookie handshakes seamlessly.
+2. **Unified Response Pipeline Interceptors:** Integrated a dynamic middleware catcher system wrapping incoming stream statuses to serialize error responses down proper system boundaries cleanly.
+3. **Global Session Sync Engine (`AuthContext.jsx`):** Integrated proactive validation mapping pulling asynchronous profile checks against `/api/auth/me`.
+4. **WebSocket Real-Time Pipe Context (`SocketContext.jsx`):** Tied client instances directly into socket state context loop pools, broadcasting lifecycle event updates instantly.
