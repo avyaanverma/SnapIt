@@ -70,3 +70,11 @@ Based on the official assignment protocols for the Real-Time Chat Application tr
 1. **Missing Message Persistence layer (`src/models/message.model.js`):** Currently no datastore architecture or Mongoose collection defined to log sender-receiver pairs, message body string contexts, and interactive timestamps.
 2. **Missing Chat Operations & Communication Controllers (`src/controllers/chat.controller.js`):** Absence of retrieval APIs to fetch direct peer-to-peer thread histories or update message read/unread status.
 3. **Missing Real-Time Web Socket Core (`src/socket/socket.js`):** The application relies entirely on standard polling-based REST endpoints. To align with a "Real-Time Chat Application" specification, an active Socket.io event loop must be mounted over the Express HTTP runtime instance to broadcast dynamic instant messaging streams.
+
+
+### 📂 Section: Real-Time Messaging Subsystem Integration
+
+#### 🛠️ Features Implemented & Resolved
+1. **Core Database Model (`message.model.js`):** Built structured logging engine routing relational sender and receiver Mongoose IDs along with message text constraints.
+2. **Instant Event Broadcasting Layer (`chat.controller.js`):** Engineered logic to isolate user session mappings (`userSocketMap`) and conditionally trigger real-time `io.to().emit()` pipes for dynamic rendering without standard polling mechanisms.
+3. **Historical Data Retrievals:** Tied optimized logical `$or` cursor configurations to chronologically serialize user-to-user dialogue indexes.

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import { comparePassword } from "../utils/comparePassword";
-import { hashPassword } from "../utils/hashPassword";
+import { comparePassword } from "../utils/comparePassword.js";
+import { hashPassword } from "../utils/hashPassword.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -43,14 +43,12 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 userSchema.pre("save", hashPassword);
 
 userSchema.methods.comparePassword = comparePassword;
 
-export default userModel = mongoose.model(
-  "User",
-  userSchema
-);
+const userModel = mongoose.model("User", userSchema);
+export default userModel;

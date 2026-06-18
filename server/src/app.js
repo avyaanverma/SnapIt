@@ -3,9 +3,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import chatRoutes from "./routes/chat.routes.js";
 import { app } from "./socket/socket.js"; 
-
-const app = express(); //  Declared first
 
 //  Middlewares
 app.use(cors({
@@ -18,5 +17,6 @@ app.use(cookieParser());
 //  Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/chat", chatRoutes);
 
 export default app;
