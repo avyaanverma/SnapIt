@@ -1,3 +1,15 @@
+# 🏆 Repository Peer-Review Report: Project SnapIt
+
+## 📌 Review Metadata
+- **Reviewer (Me):** Abdul Ayub Ali
+- **Repository Owner (Peer):** Avyaan Verma
+- **Target Repository Link:** [avyaanverma/SnapIt!!](https://github.com/avyaanverma/SnapIt.git)
+- **Assignment Track:** Real-Time Chat Application
+- **Program/Batch:** Kodex Program (Circular Shift-by-2 Pattern)
+- **Date of Review:** June 18, 2026
+
+---
+
 "Repository contained only a static landing page with no core chat or authentication functionality implemented."
 
 ### 📂 Section: Architecture & Performance (`src/routes/AppRoutes.jsx`)
