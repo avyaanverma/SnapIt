@@ -110,3 +110,47 @@ Based on the official assignment protocols for the Real-Time Chat Application tr
 2. **Unified Response Pipeline Interceptors:** Integrated a dynamic middleware catcher system wrapping incoming stream statuses to serialize error responses down proper system boundaries cleanly.
 3. **Global Session Sync Engine (`AuthContext.jsx`):** Integrated proactive validation mapping pulling asynchronous profile checks against `/api/auth/me`.
 4. **WebSocket Real-Time Pipe Context (`SocketContext.jsx`):** Tied client instances directly into socket state context loop pools, broadcasting lifecycle event updates instantly.
+
+---
+
+## 🔌 API Integration Matrix & Contract Mapping
+
+All client-side network traffic is routed through a centralized Axios client gateway targeting `http://localhost:5000/api` with full cookie context handshakes (`withCredentials: true`).
+
+### 🔑 1. Authentication Handshakes (`/auth/*`)
+
+| Endpoint | Method | Payload | Client Origin / Trigger | Success Impact |
+| :--- | :--- | :--- | :--- | :--- |
+| `/auth/register` | `POST` | `{ name, email, password }` | `Register.jsx` submission | Redirects to `/login` layout |
+| `/auth/login` | `POST` | `{ email, password }` | `Login.jsx` submission | Commits user to `localStorage`, mutates `AuthContext`, routes to `/inbox` |
+| `/auth/me` | `GET` | *None* | `AuthContext.jsx` initialization mount loop | Synchronizes active cookie state token, recovers user context on hard refresh |
+| `/auth/logout` | `POST` | *None* | `PrivateLayout.jsx` profile footer trigger | Purges local user metadata stores, clears state context, bounces to `/login` |
+
+### 👥 2. User & Workspace Diagnostics (`/user/*`)
+
+| Endpoint | Method | URL Query Params | Client Origin / Trigger | Response Format |
+| :--- | :--- | :--- | :--- | :--- |
+| `/user/search` | `GET` | `?query=string` | `Inbox.jsx` sidebar search bar text stream | `data: [{ _id, name, email }]` filtered down team member arrays |
+
+### 💬 3. Chat & Message Pipelines (`/chat/*`)
+
+| Endpoint | Method | URI Variables | Client Origin / Trigger | Payload / Data Contract |
+| :--- | :--- | :--- | :--- | :--- |
+| `/chat/:userId` | `GET` | Dynamic peer `_id` | Selection click on team list member | Retrieves chronologically ordered archival message data objects |
+| `/chat/send/:userId` | `POST` | Dynamic target `_id` | Submit form payload within chat box thread | `{ messageText }` -> Returns appended single message payload node |
+
+---
+
+## ⚡ WebSocket Real-Time Event Handshakes
+
+The client initializes an active socket socket gateway session mapping to root `http://localhost:5000` context pools only when a valid authenticated context state profile is confirmed.
+
+1. **Connection Lifecycle Query:** Passes active `userId` through initialization handshake headers parameters (`query: { userId }`).
+2. **`getOnlineUsers` (Inbound Listener):** Constantly updates the dynamic `onlineUsers` context state array containing tracking indexes to render green indicators on the active user lists.
+3. **`newMessage` (Inbound Listener):** Instantly captures inbound real-time messages sent by peer nodes. If the message `senderId` corresponds to the current viewport selected thread, the item is pushed into the message array list without requiring database polling or components refresh loops.
+
+---
+
+## 🛠️ Full-Stack Deployment Stabilization Logs
+
+21. **Mongoose Asynchronous Runtime Engine Sync (Fixed):** Handled runtime lifecycle argument decay mismatches (`next is not a function`) by optimizing standard schema pre-save triggers through pure Promise async routines. Successfully integrated independent package structures (`hashPassword.js`) cleanly while assuring data layer operations execute with zero runtime overhead or service block delays.

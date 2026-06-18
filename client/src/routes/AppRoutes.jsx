@@ -1,43 +1,49 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router";
-import PrivateLayout from "../layouts/PrivateLayout";
-import PublicLayout from "../layouts/PublicLayout";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import Home from "../pages/Home";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import Inbox from "../pages/Inbox";
+import PublicLayout from "../layouts/PublicLayout";
+import PrivateLayout from "../layouts/PrivateLayout";
+import { AuthProvider } from "../context/AuthContext";
+import { SocketProvider } from "../context/SocketContext";
 
-// Optimized: Defined router outside the component to prevent re-creation on re-renders
-let router = createBrowserRouter([
+const AppContextWrapper = () => {
+  return (
+    <AuthProvider>
+      <SocketProvider>
+        <Outlet /> 
+      </SocketProvider>
+    </AuthProvider>
+  );
+};
+
+const router = createBrowserRouter([
   {
-    path: "/",
-    element: <PublicLayout />,
+    element: <AppContextWrapper />, 
     children: [
       {
-        index: true,
+        path: "/",
         element: <Home />,
       },
       {
-        path: "login",
-        element: <Login />,
+        element: <PublicLayout />, 
+        children: [
+          { path: "login", element: <Login /> },
+          { path: "register", element: <Register /> },
+        ],
       },
       {
-        path: "register",
-        element: <Register />,
-      },
-    ],
-  },
-  {
-    path: "/",
-    element: <PrivateLayout />,
-    children: [
-      {
-        path: "inbox", // Fixed: Changed "Inbox" to lowercase "inbox" for URL consistency
-        element: <Inbox />,
+        element: <PrivateLayout />, 
+        children: [
+          { path: "inbox", element: <Inbox /> },
+        ],
       },
     ],
   },
 ]);
+
 const AppRoutes = () => {
   return <RouterProvider router={router} />;
 };
