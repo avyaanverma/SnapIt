@@ -30,7 +30,7 @@ async (
         ],
       },
     ],
-  }).select(
-    "_id name email avatar isOnline"
-  );
+  }// Inside searchUsersService, change .select() string:
+// Replace 'isOnline' with 'status'
+).select("_id name email avatar status");
 };

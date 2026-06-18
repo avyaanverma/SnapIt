@@ -44,3 +44,29 @@ To move this project from a static skeleton to a functional prototype, we should
 1. **Secure the Routes:** Implement a Protected Route wrapper inside `AppRoutes.jsx` that intercepts unauthenticated users trying to access `/inbox` or other private layouts.
 2. **Form State Validation:** Install or implement form management (e.g., React Hook Form or standard controlled hooks) in the auth folders to avoid raw form submissions.
 3. **Global Theme/Tokens Configuration:** Centralize the Tailwind colors used in `Home.jsx` (like `bg-blue-600`) into a `tailwind.config.js` theme file to maintain brand consistency as the application grows.
+
+### 📂 Section: Backend Infrastructure & Data Flow
+
+#### 🚨 Issues Identified
+1. **Application Lifecycle Reference Crash (Critical):** In `app.js`, Express application global middlewares (`express.json()`, cors, etc.) were being attached to the `app` object *before* the `app` instance was actually declared and initialized via `express()`, throwing a fatal `ReferenceError` at runtime.
+2. **Missing Global Middleware Dependencies:** The imports for vital core middleware utilities (`cookie-parser` and `cors`) were entirely missing from `app.js`, breaking the system's cookie-parsing lifecycle and cross-origin authentication requests.
+3. **Environment Injection Synchronization Race Condition:** In `server.js`, the execution of `dotenv.config()` was placed *after* the ES Module imports of `app.js` and `db.js`. Because ES Modules hoist imports synchronously, the environment variables (`MONGO_URI`, `PORT`) were loading as `undefined`, causing database connection failures on startup.
+4. **Syntax Blunder & Missing Encryption Imports:** Inside the utility functions `comparePassword.js` and `hashPassword.js`, `bcryptjs` was utilized without an explicit package import statement. Furthermore, `comparePassword.js` contained invalid syntax with a hanging trailing comma and missed core structural parameter comparisons.
+5. **Schema Model & Query Key Mismatch:** The query inside `searchUsersService` tried to select an `isOnline` flag from the database collection. However, the `user.model.js` structure declares this status property as `status` (using an `enum: ["online", "offline"]`), meaning the application would fail to return valid real-time user online statuses.
+
+#### 🛠️ Fixes Applied
+1. **Bootstrapping Sequence Reordering:** Re-structured `app.js` to initialize `const app = express()` at the absolute top before loading any internal routing or dependency configurations.
+2. **Explicit Dependency Injection:** Imported and configured `cors` and `cookie-parser` properly in `app.js` with credentials activation flag support.
+3. **Hoisting Lag Remediation:** Replaced standard delayed dotenv config initialization with an immediate top-level module import `import "dotenv/config";` in `server.js` to ensure configurations inject before downstream initializations trigger.
+4. **Encryption Engine Correction:** Added complete `bcryptjs` imports across utility helper files and patched the dynamic password validation method syntax.
+5. **Database Parameter Synchronization:** Aligned the selective data querying pipeline inside the services module to target the explicit `status` field defined inside the Mongoose schema.
+
+---
+
+## 💬 Chat Infrastructure Deficit (PDF Protocol Compliance Gap)
+
+Based on the official assignment protocols for the Real-Time Chat Application track, the codebase currently completely lacks core chat functionalities and operates merely as a user registry:
+
+1. **Missing Message Persistence layer (`src/models/message.model.js`):** Currently no datastore architecture or Mongoose collection defined to log sender-receiver pairs, message body string contexts, and interactive timestamps.
+2. **Missing Chat Operations & Communication Controllers (`src/controllers/chat.controller.js`):** Absence of retrieval APIs to fetch direct peer-to-peer thread histories or update message read/unread status.
+3. **Missing Real-Time Web Socket Core (`src/socket/socket.js`):** The application relies entirely on standard polling-based REST endpoints. To align with a "Real-Time Chat Application" specification, an active Socket.io event loop must be mounted over the Express HTTP runtime instance to broadcast dynamic instant messaging streams.
