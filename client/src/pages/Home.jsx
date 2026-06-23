@@ -1,4 +1,5 @@
-import { Link } from 'react-router';
+import React from 'react'
+import { Link } from 'react-router' 
 
 const Home = () => {
   return (
@@ -22,12 +23,13 @@ const Home = () => {
           </nav>
         </div>
         <div className="flex items-center gap-4">
-          <button className="hidden sm:block text-gray-600 font-medium px-3 py-2 hover:bg-gray-100 rounded-xl transition-all">
+          {/* Enhanced: Swapped button with active Link to navigate seamlessly to login page */}
+          <Link to="/login" className="hidden sm:block text-gray-600 font-medium px-3 py-2 hover:bg-gray-100 rounded-xl transition-all">
             Sign In
-          </button>
-          <button className="bg-blue-600 text-white font-bold px-6 py-2 rounded-xl shadow-sm hover:opacity-90 active:scale-95 duration-200">
+          </Link>
+          <Link to="/register" className="bg-blue-600 text-white font-bold px-6 py-2 rounded-xl shadow-sm hover:opacity-90 active:scale-95 duration-200">
             Get Started
-          </button>
+          </Link>
           <div className="flex gap-2">
             <span className="text-gray-600 cursor-pointer hover:bg-gray-100 p-2 rounded-full transition-colors">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,29 +64,30 @@ const Home = () => {
               The ultra-fast messaging platform built for high-performance teams. Experience seamless real-time communication that keeps your workflow moving without distractions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-              <button className="bg-blue-600 text-white font-bold px-8 py-3 rounded-xl text-lg shadow-lg hover:opacity-95 active:scale-95 transition-all">
+              <Link to="/register" className="bg-blue-600 text-white font-bold px-8 py-3 rounded-xl text-lg shadow-lg hover:opacity-95 active:scale-95 transition-all text-center">
                 Get Started for Free
-              </button>
+              </Link>
               <button className="bg-white border border-gray-300 font-semibold px-8 py-3 rounded-xl text-lg hover:bg-gray-50 transition-all">
                 Book a Demo
               </button>
             </div>
             <div className="flex items-center justify-center lg:justify-start gap-4 pt-4">
               <div className="flex -space-x-3">
+                {/* Fixed: Replaced broken google user profiles with stable placeholder avatars */}
                 <img
-                  alt="User"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                  src="https://lh3.googleusercontent.com/aida/AP1WRLtvC-vLA2nPFHGBQ5KPSmOc3MlBAaCXzI7ssJntD30ad7OKHw_Np5LR565mh3PARbnFmoQ_61dZJ5mJUFzT_dhYcKIW9YElewttuNopgWWNBQfCV-h9IykP0uKQqRMHeZNj6vGyqbx0Erjn0un5IzXXPjSJ6Ses6oIgRPQH9VlU65TKYaZbU7mIIFDnZ14jMUy0Rs52SAcQw6id55y4AVQdUCtguzc3yqx43nW7dDK2PtgslfT77WGX_f0"
+                  alt="User 1"
+                  className="w-10 h-10 rounded-full border-2 border-white bg-gray-200"
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
                 />
                 <img
-                  alt="User"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                  src="https://lh3.googleusercontent.com/aida/AP1WRLtjT42fwMAVGE0qwkMlPgnCMgrfWCgTzZESaaTJjBh5XVBY66VDdXZDowYZ_SP6_ICKJZJ_BcmQWe1qCd9Dp4ir_uzw94XKQDpzAATmWu7_xa2Is0vMRhH2ZsrrgZQ0E3lbK16KwycEv0vN_RZ6OLDBUdAnLuLXn919QO6DPfCDzLv_kMD1yfzPRMhLB6VkplmaUWAVjIKWWms7SAFiHkSIs89uo_lhkndfGmLhyaXzf8q6YM4FigPtiRZd"
+                  alt="User 2"
+                  className="w-10 h-10 rounded-full border-2 border-white bg-gray-200"
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"
                 />
                 <img
-                  alt="User"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                  src="https://lh3.googleusercontent.com/aida/AP1WRLsCg--qByYE1NAda-cv96iaTcpe7doCYWHkqs4ZAYHk_8mvUdTdNirHJBR7VndedKn6YZv4-ruQts2fyJ2eiS2kaH-ZYOnbySwwjW0CZa6O4jWwrQ6rm7QVSfFkFGtpHTANjKrkxUvrn2Kz-7i0dloqj4cvqPikufIy79CJ3KVvfFMtAFGNuXpncfxQVrRkrgf0eCWwUiueocvwNL47dnRZoDzt6iiz2C-TyRM2o9V1NH56Q1jE0_0ZH78"
+                  alt="User 3"
+                  className="w-10 h-10 rounded-full border-2 border-white bg-gray-200"
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=James"
                 />
               </div>
               <span className="text-gray-600 font-medium text-sm">
@@ -141,12 +144,13 @@ const Home = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     </div>
+                    {/* Fixed: Cleaned up duplicated text template in mock list item */}
                     <div className="flex-1">
                       <p className="font-bold text-sm">
-                        Hey everyone! Did we finalize the new hero design for SnapIt?
+                        Snapit_Hero_v2.fig
                       </p>
-                      <p className="text-xs text-gray-600">
-                        Hey everyone! Did we finalize the new hero design for SnapIt?
+                      <p className="text-xs text-gray-500">
+                        Figma Project File • 12.4 MB
                       </p>
                     </div>
                   </div>
@@ -223,7 +227,7 @@ const Home = () => {
             <div className="group bg-white border border-gray-200 p-8 rounded-[28px] hover:shadow-[0_15px_40px_rgba(0,0,0,0.05)] transition-all duration-300">
               <div className="w-14 h-14 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002-2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                 </svg>
               </div>
               <h3 className="text-xl font-semibold mb-3">File sharing</h3>
@@ -290,9 +294,9 @@ const Home = () => {
               Join thousands of companies already using SnapIt to power their daily communications. Start your 14-day free trial today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
-              <button className="bg-blue-600 text-white font-bold px-8 py-4 rounded-xl text-lg hover:opacity-90 transition-all">
+              <Link to="/register" className="bg-blue-600 text-white font-bold px-8 py-4 rounded-xl text-lg hover:opacity-90 transition-all text-center">
                 Create Free Account
-              </button>
+              </Link>
               <button className="bg-transparent border border-gray-400 text-white font-bold px-8 py-4 rounded-xl text-lg hover:bg-white/10 transition-all">
                 Talk to Sales
               </button>
@@ -327,52 +331,28 @@ const Home = () => {
           <div className="space-y-4">
             <h5 className="font-bold uppercase text-xs tracking-widest text-gray-500">Product</h5>
             <ul className="space-y-2 text-gray-600">
-              <li>
-                <a className="hover:text-blue-600 transition-colors" href="#">Features</a>
-              </li>
-              <li>
-                <a className="hover:text-blue-600 transition-colors" href="#">Desktop App</a>
-              </li>
-              <li>
-                <a className="hover:text-blue-600 transition-colors" href="#">Mobile App</a>
-              </li>
-              <li>
-                <a className="hover:text-blue-600 transition-colors" href="#">Integrations</a>
-              </li>
+              <li><a className="hover:text-blue-600 transition-colors" href="#">Features</a></li>
+              <li><a className="hover:text-blue-600 transition-colors" href="#">Desktop App</a></li>
+              <li><a className="hover:text-blue-600 transition-colors" href="#">Mobile App</a></li>
+              <li><a className="hover:text-blue-600 transition-colors" href="#">Integrations</a></li>
             </ul>
           </div>
           <div className="space-y-4">
             <h5 className="font-bold uppercase text-xs tracking-widest text-gray-500">Company</h5>
             <ul className="space-y-2 text-gray-600">
-              <li>
-                <a className="hover:text-blue-600 transition-colors" href="#">About Us</a>
-              </li>
-              <li>
-                <a className="hover:text-blue-600 transition-colors" href="#">Careers</a>
-              </li>
-              <li>
-                <a className="hover:text-blue-600 transition-colors" href="#">Press Kit</a>
-              </li>
-              <li>
-                <a className="hover:text-blue-600 transition-colors" href="#">Blog</a>
-              </li>
+              <li><a className="hover:text-blue-600 transition-colors" href="#">About Us</a></li>
+              <li><a className="hover:text-blue-600 transition-colors" href="#">Careers</a></li>
+              <li><a className="hover:text-blue-600 transition-colors" href="#">Press Kit</a></li>
+              <li><a className="hover:text-blue-600 transition-colors" href="#">Blog</a></li>
             </ul>
           </div>
           <div className="space-y-4">
             <h5 className="font-bold uppercase text-xs tracking-widest text-gray-500">Support</h5>
             <ul className="space-y-2 text-gray-600">
-              <li>
-                <a className="hover:text-blue-600 transition-colors" href="#">Help Center</a>
-              </li>
-              <li>
-                <a className="hover:text-blue-600 transition-colors" href="#">Security</a>
-              </li>
-              <li>
-                <a className="hover:text-blue-600 transition-colors" href="#">Terms of Service</a>
-              </li>
-              <li>
-                <a className="hover:text-blue-600 transition-colors" href="#">Privacy Policy</a>
-              </li>
+              <li><a className="hover:text-blue-600 transition-colors" href="#">Help Center</a></li>
+              <li><a className="hover:text-blue-600 transition-colors" href="#">Security</a></li>
+              <li><a className="hover:text-blue-600 transition-colors" href="#">Terms of Service</a></li>
+              <li><a className="hover:text-blue-600 transition-colors" href="#">Privacy Policy</a></li>
             </ul>
           </div>
         </div>
@@ -385,7 +365,7 @@ const Home = () => {
         </div>
       </footer>
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
