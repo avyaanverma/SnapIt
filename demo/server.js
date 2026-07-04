@@ -17,7 +17,8 @@ function startServer(){
         socket.on("send-message", (data)=>{
             messages.push({
                 socketId: socket.id,
-                message: data 
+                userName: data.userNameVal,
+                message: data.messageVal
             });
             // io => broadcast messages
             io.emit("receive-message", messages);
