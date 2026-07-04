@@ -1,0 +1,26 @@
+body{
+    background-color: chocolate;
+    color:white;
+}
+
+.chat-section{
+    margin: 20px;
+    border-radius: 10px 25px;
+    background-color: white;
+    color: black;
+    overflow: hidden;
+}
+
+.chat-section .top-section{
+    background-color: black;
+    color: white;
+    padding: 2px;
+}
+
+.chat-section .area{
+    padding: 20px;
+}
+
+.chat-section .message{
+    margin: 10px 10px;
+}
