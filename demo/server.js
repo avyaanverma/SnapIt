@@ -6,26 +6,42 @@ function startServer(){
     const app = createApp();
     const httpServer = createServer(app);
 
-    let messages = [];
+    // storing messages in array
+    const messages = [];
+
+    // storing users in map
+    const users = new Map();
 
     const io = new Server(httpServer);
     io.on("connection", (socket)=>{
         console.log("Client Connected.");
         socket.emit("welcome", "Welcome to the chat!");
-        socket.emit("receive-message", messages);
+        socket.emit("chat: receive", messages);
         
-        socket.on("send-message", (data)=>{
+        socket.on("register-user", (data)=>{
+            socket.username = data;
+            users.set(socket.id, {
+                username: socket.username
+            })
+            io.emit("user:joined", `🟢 ${socket.username} joined the chat`);        
+        })
+        
+        
+        socket.on("chat:send", (data)=>{
             messages.push({
                 socketId: socket.id,
-                userName: data.userNameVal,
+                username: socket.username,
                 message: data.messageVal
             });
             // io => broadcast messages
-            io.emit("receive-message", messages);
+            io.emit("chat:receive", messages);
         })
-
-        socket.on("disconnect", (socket)=>{
+        
+        socket.on("disconnect", (reason)=>{
             console.log("Client Disconnected.");
+            if(socket){
+                io.emit("user:left", `🟠 ${socket.username} left the chat`);
+            }
         })
     });
 
